@@ -1,2 +1,2 @@
 all:	main.cpp
-	g++ main.cpp -o belmanFord
+	g++ main.cpp -o prim
