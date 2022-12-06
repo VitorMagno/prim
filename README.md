@@ -7,7 +7,7 @@
      use -o <arquivo> para redirecionar saida para arquivo.
      use -s para exibir solucao ordenada.
      use -i <vertInicial> para indicar vertice inicial.
-     use -l <vertFinal> para indicar vertice final.
+     use -l <vertFinal> para indicar vertice final.(Nao disponivel)
 > ## O que o Algoritmo faz?
   O algoritmo de Prim produz a arvore geradora mínima de um grafo não direcionado.
 > ### Use o arquivo exemplo.txt como entrada de exemplo.
