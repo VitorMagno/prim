@@ -9,5 +9,5 @@
      use -i <vertInicial> para indicar vertice inicial.
      use -l <vertFinal> para indicar vertice final.
 > ## O que o Algoritmo faz?
-  O algoritmo de Prim produz a arvore geradora mínime de um grafo não direcionado.
+  O algoritmo de Prim produz a arvore geradora mínima de um grafo não direcionado.
 > ### Use o arquivo exemplo.txt como entrada de exemplo.
