@@ -1,4 +1,4 @@
-> # BelmanFord
+> # Prim
   repositorio criado para apresentar algoritmo para ab2 da disciplina de teoria dos grafos.
 > ## Como compilar?
   utilize o comando Make para compilar, certifique-se de que tenha o necessário instalado.
@@ -9,5 +9,5 @@
      use -i <vertInicial> para indicar vertice inicial.
      use -l <vertFinal> para indicar vertice final.
 > ## O que o Algoritmo faz?
-  O algoritmo de belmanFord consegue retornar os caminhos minimo de um grafo direcionado e não direcionado com pesos tanto positivos como negativos, escolhi fazer o direcionado. De acordo com os parâmetros de entrada a saída pode ser com a soma dos pesos ou uma sequência ordenada com o peso para cada vértice.
-> ## Use o arquivo exemplo.txt como entrada de exemplo.
+  O algoritmo de Prim produz a arvore geradora mínime de um grafo não direcionado.
+> ### Use o arquivo exemplo.txt como entrada de exemplo.

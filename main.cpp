@@ -11,7 +11,7 @@
 using namespace std;
 
 
-void belmanFord(int s, int t, int n, int** G, int *dist, int *pais)
+void prim(int s, int t, int n, int** G, int *dist, int *pais)
 {
   // inicializa d e p
     for (int i = s; i <= t; i++)
@@ -51,7 +51,7 @@ void solutions(bool saida, string nomeSaida, bool solucao, int s, int t, int** G
     int pais[t];
     //vector<int> *ptrDist = &dist;
     //vector<int> *ptrPais = &pais;
-    belmanFord(s, t, n, G, &dist[0], &pais[0]);
+    prim(s, t, n, G, &dist[0], &pais[0]);
     if (saida && solucao){
     // escreve a saida das distancias ordenadas num arquivo txt
         ofstream out;
