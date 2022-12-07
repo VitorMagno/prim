@@ -134,7 +134,7 @@ void solutions(bool saida, string nomeSaida, bool solucao, int s, int t, int** G
     }
     
     cout << "peso do menor caminho: "<< sumCaminho << endl;*/
-    //return;
+    return;
 }
 
 int main(int argc, char const *argv[]){
