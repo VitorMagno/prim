@@ -196,13 +196,15 @@ int main(int argc, char const *argv[]){
     }
 
     if (argv[i] == opFinal){
-      final = true;
-      t = stoi(argv[i+1]);
+      cout << "nao disponivel" << endl;
+      return;
+      //final = true;
+      //t = stoi(argv[i+1]);
     }
 
     if (argv[i] == opSaida){
     	saida = true;
-        nomeSaida = argv[i+1];
+      nomeSaida = argv[i+1];
     }
     if(argv[i]== opSolucao){
         solucao = true;
