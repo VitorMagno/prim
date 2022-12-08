@@ -10,12 +10,12 @@
 
 using namespace std;
 
-bool naoEhDoMesmoConjunto(int paiDoVerticeVizinho, int paiDoVerticeAtual){
+/*bool naoEhDoMesmoConjunto(int paiDoVerticeVizinho, int paiDoVerticeAtual){
   if(paiDoVerticeVizinho != paiDoVerticeAtual){
     return false;
   }
   return true;
-}
+}*/
 
 bool existeCaminho(int valor){
   if(valor == INT_MAX){
@@ -23,118 +23,84 @@ bool existeCaminho(int valor){
   }
   return true;
 }
-bool atualizarDistancia(int custo, int pesoDoAtual, int pesoVizinho){
-  if(custo < pesoVizinho + pesoDoAtual){
-    return false;
+bool precisaAtualizar(int custoAtual, int pesoDeOutroCaminho){
+  if(custoAtual > pesoDeOutroCaminho ){
+    return true;
   }
-  return true;
+  return false;
 }
-void prim(int s, int t, int n, int** G, int *distAcumulada, int *paiDe)
+void prim(int s, int t, int n, int** G, int *distIndividual, int *paiDe)
 {
   // inicializa d e p
-    int distIndividual[t];
-    for (int i = s; i <= t; i++)
-    {
-        distAcumulada[i] = 100000;
-        paiDe[i]= i;
-        //cout << dist.at(i) << paiDe.at(i) <<endl;
-    }
-    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> fila;
-    fila.push({0,s});
-    while(!fila.empty()){
-      pair<int,int> primeiroElementoDaFila = fila.top();
-      fila.pop();
-      int verticeAtual = primeiroElementoDaFila.second;
-      int pesoVerticeAtual = primeiroElementoDaFila.first;
-      for(int i = 1; i < t; i++){
-        int vizinhoVerticeAtual = i;
-        int pesoDoVizinhoPeloVerticeAtual = G[verticeAtual][vizinhoVerticeAtual];
-        if(existeCaminho(pesoDoVizinhoPeloVerticeAtual)){
-          if(atualizarDistancia(distAcumulada[vizinhoVerticeAtual], pesoVerticeAtual, pesoDoVizinhoPeloVerticeAtual)){
-            if(naoEhDoMesmoConjunto(paiDe[vizinhoVerticeAtual], paiDe[verticeAtual])){
-              distAcumulada[vizinhoVerticeAtual] = pesoDoVizinhoPeloVerticeAtual + pesoVerticeAtual;
-              distIndividual[vizinhoVerticeAtual] = pesoVerticeAtual;
-              paiDe[vizinhoVerticeAtual] = verticeAtual;
-            }
-          }
+  for (int i = s; i < t; i++)
+  {
+      distIndividual[i] = 100000;
+      paiDe[i]= i;
+      //cout << dist.at(i) << paiDe.at(i) <<endl;
+  }
+  bool naArvore[t];
+  for (int i = s; i < t; i++){
+    naArvore[i] = false;
+  }
+  priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> fila;
+  fila.push({0,s});
+  while(!fila.empty()){
+    pair<int,int> primeiroElementoDaFila = fila.top();
+    fila.pop();
+    int verticeAtual = primeiroElementoDaFila.second;
+    int pesoVerticeAtual = primeiroElementoDaFila.first;
+    naArvore[verticeAtual] = true;
+    for(int i = 1; i < t; i++){
+      int vizinhoVerticeAtual = i;
+      int pesoDoVizinhoPeloVerticeAtual = G[verticeAtual][vizinhoVerticeAtual];
+      //cout << vizinhoVerticeAtual << " peso " << pesoDoVizinhoPeloVerticeAtual << endl;
+      if(existeCaminho(pesoDoVizinhoPeloVerticeAtual)){
+        if(precisaAtualizar(distIndividual[vizinhoVerticeAtual], pesoDoVizinhoPeloVerticeAtual) == true && naArvore[vizinhoVerticeAtual] == false){
+          distIndividual[vizinhoVerticeAtual] = pesoDoVizinhoPeloVerticeAtual;
+          paiDe[vizinhoVerticeAtual] = verticeAtual;
+          //cout << paiDe[vizinhoVerticeAtual] << " eh pai de " << vizinhoVerticeAtual << " com distancia " << distIndividual[vizinhoVerticeAtual] << endl;
+          fila.push({distIndividual[vizinhoVerticeAtual], vizinhoVerticeAtual});
         }
       }
     }
-    
-    return;
+  }
+  return;
 }
 
 
 void solutions(bool saida, string nomeSaida, bool solucao, int s, int t, int** G, int n){
-    int dist[t];
-    int pais[t];
-    //vector<int> *ptrDist = &dist;
-    //vector<int> *ptrPais = &pais;
-    prim(s, t, n, G, &dist[0], &pais[0]);
-    string resposta="";
-    if (saida && solucao){
+  int dist[t];
+  int pais[t];
+  prim(s, t, n, G, &dist[0], &pais[0]);
+  string resposta="";
+  if (saida && solucao){
     // escreve a saida das distancias ordenadas num arquivo txt
-        ofstream out;
-        out.open(nomeSaida, ofstream::out);
-        for (int i = t; i > s; i--)
-        {
-          if(i == s){
-            resposta = "raiz\n " + resposta;
-          }else if (pais[i] == i){
-            resposta = "nao existe caminho\n" + resposta;
-          }else{
-            resposta = pais[pais[i]] + '->' + pais[i] + ' : ' + (dist[i] - dist[i-1]) +"\n" + resposta;
-          }
-          out << resposta << endl;
-        }
-        out.close();
-        return;
-    }else{
-    // exibe no terminal as distancias ordenadas de cada aresta
-      for (int i = t; i > s; i--)
-        {
-          if(i == s){
-            resposta = "raiz\n " + resposta;
-          }else if (pais[i] == i){
-            resposta = "nao existe caminho\n" + resposta;
-          }else{
-            resposta = pais[pais[i]] + '->' + pais[i] + ' : ' + (dist[i] - dist[i-1]) +"\n" + resposta;
-          }
-          cout << resposta << endl;
-        }
-    return;
-    }
-    //if(saida){
-    // escreve o peso do menor caminho num arquivo txt
-        cout << "nao implementado nesse algoritmo" <<endl;
-       /* ofstream out;
-        out.open(nomeSaida, ofstream::out);
-        int sumCaminho;
-        for(int i = s; i <= t; i++){
-          if(dist[i] == 100000){
-            continue;
-          }else{
-            sumCaminho = dist[i];
-          }
-        }
-        out << "peso do menor caminho: "<< sumCaminho << endl;
-        out.close();
-        return;*/
-    //}
-    
-    // exibe no terminal o peso do menor caminho
-    /*int sumCaminho=0;
-    for(int i = s; i <= t; i++){
-      if(dist[i] == 100000){
-        continue;
+    ofstream out;
+    out.open(nomeSaida, ofstream::out);
+    for (int i = t-1; i >= s; i--){
+      if(i == s){
+        resposta ="raiz:\n"+i+resposta;
       }else{
-        //cout<< "v: " << i << " distancia " << dist[i]<<endl;
-        sumCaminho = dist[i];
+        resposta = to_string(pais[pais[i]]) + "->" + to_string(pais[i]) + ": " + to_string(dist[i]) +"\n" + resposta;
       }
     }
-    
-    cout << "peso do menor caminho: "<< sumCaminho << endl;*/
+    out << resposta << endl;
+    out.close();
     return;
+  }else{
+    // exibe no terminal as distancias ordenadas de cada aresta
+    for (int i = t-1; i >= s; i--){
+        if(i == s){
+          resposta ="comeca no "+ to_string(i) +"\n"+resposta;
+        }else{
+          resposta ="indo para " + to_string(i) + " pelo " + to_string(pais[i])+ " custa: " + to_string(dist[i]) + "\n" + resposta;
+        }
+      }
+    cout << resposta << endl;
+    return;
+  }
+  cout << "nao implementado nesse algoritmo" <<endl;
+  return;
 }
 
 int main(int argc, char const *argv[]){
