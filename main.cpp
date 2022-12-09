@@ -80,6 +80,8 @@ void solutions(bool saida, string nomeSaida, bool solucao, int verticeInicial, i
     for (int i = verticeFinal; i >= verticeInicial; i--){
       if(i == verticeInicial){
         resposta ="raiz: "+to_string(i) + "\n"+resposta;
+      }else if (dist[i] == 100000){
+        resposta = "vertice " +to_string(i) + " nao atingivel\n" + resposta;
       }else{
         resposta = to_string(pais[i]) + " pai de " +to_string(i)+ " com peso: " + to_string(dist[i]) + "\n" + resposta;
       }
@@ -92,6 +94,8 @@ void solutions(bool saida, string nomeSaida, bool solucao, int verticeInicial, i
     for (int i = verticeFinal; i >= verticeInicial; i--){
         if(i == verticeInicial){
           resposta ="raiz: "+to_string(i) + "\n"+resposta;
+        }else if (dist[i] == 100000){
+          resposta = "vertice " +to_string(i) + " nao atingivel\n" + resposta;
         }else{
           resposta = to_string(pais[i]) + " pai de " +to_string(i)+ " com peso: " + to_string(dist[i]) + "\n" + resposta;
         }
