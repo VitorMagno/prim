@@ -79,9 +79,9 @@ void solutions(bool saida, string nomeSaida, bool solucao, int verticeInicial, i
     out.open(nomeSaida, ofstream::out);
     for (int i = verticeFinal; i >= verticeInicial; i--){
       if(i == verticeInicial){
-        resposta ="raiz:\n"+i+resposta;
+        resposta ="raiz: "+to_string(i) + "\n"+resposta;
       }else{
-        resposta = to_string(pais[pais[i]]) + "->" + to_string(pais[i]) + ": " + to_string(dist[i]) +"\n" + resposta;
+        resposta = to_string(pais[i]) + " pai de " +to_string(i)+ " com peso: " + to_string(dist[i]) + "\n" + resposta;
       }
     }
     out << resposta << endl;
@@ -91,9 +91,9 @@ void solutions(bool saida, string nomeSaida, bool solucao, int verticeInicial, i
     // exibe no terminal as distancias ordenadas de cada aresta
     for (int i = verticeFinal; i >= verticeInicial; i--){
         if(i == verticeInicial){
-          resposta ="comeca no "+ to_string(i) +"\n"+resposta;
+          resposta ="raiz: "+to_string(i) + "\n"+resposta;
         }else{
-          resposta ="indo para " + to_string(i) + " pelo " + to_string(pais[i])+ " custa: " + to_string(dist[i]) + "\n" + resposta;
+          resposta = to_string(pais[i]) + " pai de " +to_string(i)+ " com peso: " + to_string(dist[i]) + "\n" + resposta;
         }
       }
     cout << resposta << endl;
