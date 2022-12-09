@@ -32,14 +32,14 @@ bool precisaAtualizar(int custoAtual, int pesoDeOutroCaminho){
 void prim(int verticeInicial, int verticeFinal, int n, int** G, int *distIndividual, int *paiDe)
 {
   // inicializa d e p
-  for (int i = verticeInicial; i < verticeFinal; i++)
+  for (int i = verticeInicial; i <= verticeFinal; i++)
   {
       distIndividual[i] = 100000;
       paiDe[i]= i;
       //cout << dist.at(i) << paiDe.at(i) <<endl;
   }
   bool naArvore[verticeFinal];
-  for (int i = verticeInicial; i < verticeFinal; i++){
+  for (int i = verticeInicial; i <= verticeFinal; i++){
     naArvore[i] = false;
   }
   priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> fila;
@@ -50,7 +50,7 @@ void prim(int verticeInicial, int verticeFinal, int n, int** G, int *distIndivid
     int verticeAtual = primeiroElementoDaFila.second;
     int pesoVerticeAtual = primeiroElementoDaFila.first;
     naArvore[verticeAtual] = true;
-    for(int i = 1; i < verticeFinal; i++){
+    for(int i = 1; i <= verticeFinal; i++){
       int vizinhoVerticeAtual = i;
       int pesoDoVizinhoPeloVerticeAtual = G[verticeAtual][vizinhoVerticeAtual];
       //cout << vizinhoVerticeAtual << " peso " << pesoDoVizinhoPeloVerticeAtual << endl;
@@ -197,7 +197,6 @@ int main(int argc, char const *argv[]){
 
     if (argv[i] == opFinal){
       cout << "nao disponivel" << endl;
-      return;
       //final = true;
       //verticeFinal = stoi(argv[i+1]);
     }
@@ -213,4 +212,5 @@ int main(int argc, char const *argv[]){
 
   solutions(saida, nomeSaida, solucao, verticeInicial, verticeFinal, G, n);
   free(G);
+  return 0;
 }
